@@ -48,8 +48,35 @@ int main()
    }
    imshow("img3",img3);
    //Á·Ï°ËÄ
+   cv::Mat scrMat = imread("C:\\Users\\YangYF\\Desktop\\1.jpg");
+   cv::Mat deepMat;
+   cv::Mat shallowMat;
+   shallowMat = scrMat;
+   scrMat.copyTo(deepMat);
+   int height2 = scrMat.rows;//ÐÐ
+   int width2 = scrMat.cols;//ÁÐ
+   for (int i = 0; i<width2; i++)
+   {
+	   for (int j = 0; j < height2; j++)
+	   {
 
-	waitKey(0);
-	return 0;
+		   uchar threshold = 100;
+		   uchar average = (scrMat.at<Vec3b>(j, i)[0] + scrMat.at<Vec3b>(j, i)[1] + scrMat.at<Vec3b>(j, i)[2]) / 3;
+		  
+		   if (average > threshold)
+			   average = 255;
+		   else
+			   average = 0;
+		   scrMat.at<Vec3b>(j, i)[0] = average;
+		   scrMat.at<Vec3b>(j, i)[1] = average;
+		   scrMat.at<Vec3b>(j, i)[2] = average;
+	   }
+   } 
+   
+   
+   imshow("deppMat", deepMat);
+   imshow("shallowMat", shallowMat);
+   waitKey(0);
+   return 0;
 	
 }
